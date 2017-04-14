@@ -2,6 +2,8 @@ import os
 from wit import Wit
 import requests
 from bottle import Bottle, request, debug
+from fb import getDataPage
+from random import randrange
 
 
 # Declare some constants
@@ -98,9 +100,41 @@ def send(request, response):
     fb_message(fb_id, text)
 
 
+def merge(request):
+    # get the context, type
+    context = request['context']
+    entities = request['entities']
+    print('In merge(), context: ' + str(context) +
+          ' entities:' + str(entities))
+
+    if 'place' in context:
+        del context['place']
+    category = first_entity_value(entities, 'category')
+    if category:
+        context['cat'] = category
+    if 'ack' in context:
+        print(context['ack'])
+        del context['ack']
+    return context
+
+
+def select_place(request):
+    context = request['context']
+    data = getDataPage(context['cat'])
+    if data is not None:
+        i = randrange(0, len(data) - 1, 1)
+        context['place'] = data[i]['name']
+        return context
+    else:
+        context['place'] = 'No place found'
+        return context
+
+
 # Setup Actions
 actions = {
     'send': send,
+    'merge': merge,
+    'select-place': place,
 }
 
 # Setup Wit Client
