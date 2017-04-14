@@ -27,9 +27,9 @@ def messenger_webhook():
     if verify_token == FB_VERIFY_TOKEN:
         # respond with the challenge to confirm
         challenge = request.query.get('hub.challenge')
-        return challenge
+        return challenge, 200
     else:
-        return 'Invalid Request or Verification Token'
+        return 'Invalid Request or Verification Token', 403
 
 
 # Facebook Messenger POST Webhook
