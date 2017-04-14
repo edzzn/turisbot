@@ -5,7 +5,6 @@ from bottle import Bottle, request, debug
 from fb import getDataPage
 from random import randrange
 
-
 # Declare some constants
 FB_VERIFY_TOKEN = os.environ['FB_VERIFY_TOKEN']
 # FB_PAGE_ID = os.environ['FB_PAGE_ID']
@@ -134,7 +133,7 @@ def select_place(request):
 actions = {
     'send': send,
     'merge': merge,
-    'select-place': place,
+    'select-place': select_place,
 }
 
 # Setup Wit Client
