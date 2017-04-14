@@ -6,7 +6,7 @@ from bottle import Bottle, request, debug
 
 # Declare some constants
 FB_VERIFY_TOKEN = os.environ['FB_VERIFY_TOKEN']
-FB_PAGE_ID = os.environ['FB_PAGE_ID']
+# FB_PAGE_ID = os.environ['FB_PAGE_ID']
 FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
 WIT_TOKEN = os.environ['WIT_TOKEN']
 
