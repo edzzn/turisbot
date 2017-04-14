@@ -1,7 +1,7 @@
 import requests
-from app import FB_ACCESS_TOKEN
+import os
 
-token = FB_ACCESS_TOKEN
+token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
 
 # set info
 
