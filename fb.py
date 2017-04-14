@@ -10,14 +10,19 @@ def setSearchIdsUrl(topic):
     latitude = "-2.9183953"
     longitude = "-79.0362543"
     radio = "5000"  # en metros
-    return ("https://graph.facebook.com/v2.8/search?q=" + topic + "&type=place&center=" + latitude + "%2C" + longitude + "&distance=" + radio + "&access_token=" + token)
+    return ("https://graph.facebook.com/v2.8/search?q=" + topic +
+            "&type=place&center=" + latitude + "%2C" + longitude + "&distance="
+            + radio + "&access_token=" + token)
 
 
-def setSearchPageUrl(topic):
-    latitude = "-2.9183953"
-    longitude = "-79.0362543"
-    radio = "5000"  # en metros
-    return "https://graph.facebook.com/v2.8/" + topic + "?fields=about%2Clocation%2Coverall_star_rating%2Cratings%7Brating%2Chas_rating%7D%2Cpicture%7Burl%7D%2Cname%2Chours&access_token=" + token
+# def setSearchPageUrl(topic):
+#     latitude = "-2.9183953"
+#     longitude = "-79.0362543"
+#     radio = "5000"  # en metros
+#     return ("https://graph.facebook.com/v2.8/" + topic +
+#             "?fields=about%2Clocation%2Coverall_star_rating%2Cratings%7B" +
+#             "rating%2Chas_rating%7D%2Cpicture%7Burl%7D%2Cname%2C" +
+#             "hours&access_token=" + token)
 
 
 # funtion that from a Url outputs jsonData
