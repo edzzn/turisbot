@@ -1,7 +1,8 @@
 import requests
 import os
 
-token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
+# token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
+token = FB_ACCESS_TOKEN = 'EAACEdEose0cBAJIcIZBbMeHioVey7jbIRmDzZBEH6mQ2dIh9f4ZAjZB7ZBvsOcbPa69fv88ZCUVJBCNj5KoyYqal5OXkgwVTu8rkIZBgEdQywnPLamaAYB4owHAZAvU0RlojeAvskMeCImIlyWJepkXpAiwJZAe7KrgI5FT3ZBMbb8Ri6U47cXBbqSUIZCVmiR2cZB4ZD'
 
 # set info
 
@@ -14,18 +15,9 @@ def setSearchIdsUrl(topic):
             "&type=place&center=" + latitude + "%2C" + longitude + "&distance="
             + radio + "&access_token=" + token)
 
-
-# def setSearchPageUrl(topic):
-#     latitude = "-2.9183953"
-#     longitude = "-79.0362543"
-#     radio = "5000"  # en metros
-#     return ("https://graph.facebook.com/v2.8/" + topic +
-#             "?fields=about%2Clocation%2Coverall_star_rating%2Cratings%7B" +
-#             "rating%2Chas_rating%7D%2Cpicture%7Burl%7D%2Cname%2C" +
-#             "hours&access_token=" + token)
-
-
 # funtion that from a Url outputs jsonData
+
+
 def getDataUrl(url):
     webURL = requests.get(url)
     return webURL.json()
@@ -47,9 +39,25 @@ def getFirstPage(query):
 def getDataPage(query):
     requests = getDataUrl(setSearchIdsUrl(query))
     # print(requests)
-    if 'data' in requests and len(requests['data']) > 0:
+    if 'data' in requests:
         print('FB.py sent data')
         return(requests['data'])
+    elif 'error' in requests and len(requests['data']) > 0:
+        print(requests['error']['message'])
+        return None
+    else:
+        print('No data')
+        return None
+
+
+def searchPage(pageId):
+    url = ("https://graph.facebook.com/v2.8/" + pageId + "?fields=name%2C" +
+           "location%2Coverall_star_rating&access_token=" + token)
+    requests = getDataUrl(url)
+    print(requests)
+    if 'name' in requests:
+        print('FB.py sent data')
+        return(requests)
     elif 'error' in requests:
         print(requests['error']['message'])
         return None
@@ -58,10 +66,8 @@ def getDataPage(query):
         return None
 
 
-# list the ids of Pages
-
-
 def listIdPages(data):
+    # list the ids of Pages
     for place in data['data']:
         print(place['id'])
 
@@ -79,3 +85,5 @@ def writeIdPages(data, fileId):
 
 
 # getFirstPage("italian")
+a = searchPage('PizzeriaLittleItalyCuenca')
+print(a['location']['street'])
