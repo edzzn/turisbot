@@ -112,7 +112,7 @@ def select_place(request):
             msj = msj + ", esta en las calles: " + dataPage['location']['street']
         if 'overall_star_rating' in dataPage:
             msj = msj + " y tiene un promedio de " + dataPage['overall_star_rating'] + ' estrellas'
-        context['place'] = data[i]['name']
+        context['place'] = msj
         return context
     else:
         context['place'] = 'No place found'
