@@ -19,13 +19,8 @@ app = Bottle()
 # Facebook Messenger GET Webhook
 @app.get('/webhook')
 def messenger_webhook():
-    """
-    A webhook to return a challenge
-    """
     verify_token = request.query.get('hub.verify_token')
-    # check whether the verify tokens match
     if verify_token == FB_VERIFY_TOKEN:
-        # respond with the challenge to confirm
         challenge = request.query.get('hub.challenge')
         return challenge, 200
     else:
@@ -35,24 +30,17 @@ def messenger_webhook():
 # Facebook Messenger POST Webhook
 @app.post('/webhook')
 def messenger_post():
-    """
-    Handler for webhook (currently for postback and messages)
-    """
     data = request.json
+    print('Data Received')
+    print(data)
     if data['object'] == 'page':
         for entry in data['entry']:
-            # get all the messages
             messages = entry['messaging']
             if messages[0]:
                 # Get the first message
                 message = messages[0]
-                # Yay! We got a new message!
-                # We retrieve the Facebook user ID of the sender
                 fb_id = message['sender']['id']
-                # We retrieve the message content
                 text = message['message']['text']
-                # Let's forward the message to the Wit.ai Bot Engine
-                # We handle the response in the function send()
                 client.run_actions(session_id=fb_id, message=text)
     else:
         # Returned another event
@@ -61,9 +49,6 @@ def messenger_post():
 
 
 def fb_message(sender_id, text):
-    """
-    Function for returning response to messenger
-    """
     data = {
         'recipient': {'id': sender_id},
         'message': {'text': text}
@@ -77,9 +62,6 @@ def fb_message(sender_id, text):
 
 
 def first_entity_value(entities, entity):
-    """
-    Returns first entity value
-    """
     if entity not in entities:
         return None
     val = entities[entity][0]['value']
@@ -89,13 +71,11 @@ def first_entity_value(entities, entity):
 
 
 def send(request, response):
-    """
-    Sender function
-    """
     # We use the fb_id as equal to session_id
     fb_id = request['session_id']
     text = response['text']
-    # send message
+    print('Fb_di: ' + request)
+    print('text: ' + response)
     fb_message(fb_id, text)
 
 
