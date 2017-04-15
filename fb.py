@@ -48,6 +48,7 @@ def getDataPage(query):
     requests = getDataUrl(setSearchIdsUrl(query))
     # print(requests)
     if 'data' in requests and len(requests['data']) > 0:
+        print('FB.py sent data')
         return(requests['data'])
     elif 'error' in requests:
         print(requests['error']['message'])
