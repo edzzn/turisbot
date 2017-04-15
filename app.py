@@ -4,6 +4,7 @@ import requests
 from bottle import Bottle, request, debug, response
 from fb import getDataPage
 from random import randrange
+from sys import argv
 
 # Declare some constants
 FB_VERIFY_TOKEN = os.environ['FB_VERIFY_TOKEN']
@@ -54,9 +55,9 @@ def fb_message(sender_id, text):
         'recipient': {'id': sender_id},
         'message': {'text': text}
     }
-    # Setup the query string with your PAGE TOKEN
+    # prepare query
     qs = 'access_token=' + FB_ACCESS_TOKEN
-    # Send POST request to messenger
+    # send post request to messenger
     resp = requests.post('https://graph.facebook.com/me/messages?' + qs,
                          json=data)
     return resp.content
@@ -72,7 +73,7 @@ def first_entity_value(entities, entity):
 
 
 def send(request, response):
-    # We use the fb_id as equal to session_id
+    # sender function
     fb_id = request['session_id']
     text = response['text']
     print('Fb_di:')
