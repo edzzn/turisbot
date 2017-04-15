@@ -1,8 +1,7 @@
 import requests
 import os
 
-# token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
-token = FB_ACCESS_TOKEN = 'EAACEdEose0cBAJIcIZBbMeHioVey7jbIRmDzZBEH6mQ2dIh9f4ZAjZB7ZBvsOcbPa69fv88ZCUVJBCNj5KoyYqal5OXkgwVTu8rkIZBgEdQywnPLamaAYB4owHAZAvU0RlojeAvskMeCImIlyWJepkXpAiwJZAe7KrgI5FT3ZBMbb8Ri6U47cXBbqSUIZCVmiR2cZB4ZD'
+token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
 
 # set info
 
@@ -85,5 +84,5 @@ def writeIdPages(data, fileId):
 
 
 # getFirstPage("italian")
-a = searchPage('PizzeriaLittleItalyCuenca')
-print(a['location']['street'])
+# a = searchPage('PizzeriaLittleItalyCuenca')
+# print(a['location']['street'])
