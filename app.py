@@ -1,7 +1,7 @@
 import os
 from wit import Wit
 import requests
-from bottle import Bottle, request, debug
+from bottle import Bottle, request, debug, response
 from fb import getDataPage
 from random import randrange
 
@@ -21,10 +21,11 @@ app = Bottle()
 def messenger_webhook():
     verify_token = request.query.get('hub.verify_token')
     if verify_token == FB_VERIFY_TOKEN:
+        challenge = response.status = 200
         challenge = request.query.get('hub.challenge')
-        return challenge, 200
+        return challenge
     else:
-        return 'Invalid Request or Verification Token', 403
+        return 'Invalid Request or Verification Token'
 
 
 # Facebook Messenger POST Webhook
