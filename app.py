@@ -75,8 +75,10 @@ def send(request, response):
     # We use the fb_id as equal to session_id
     fb_id = request['session_id']
     text = response['text']
-    print('Fb_di: ' + request)
-    print('text: ' + response)
+    print('Fb_di:')
+    print(fb_id)
+    print('text: ')
+    print(response)
     fb_message(fb_id, text)
 
 
