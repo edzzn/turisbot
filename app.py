@@ -30,7 +30,6 @@ logger = logging.getLogger(__name__)
 def verify_webhook():
     # When the endpoint is registered as a webhook, it must
     # return the 'hub.challenge' value in the query arguments.
-    correct_token = security_tokens["fb_webhook_verify_token"]
     if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
         if not request.args.get("hub.verify_token") == correct_token:
             return "Verification token mismatch", 403
