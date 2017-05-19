@@ -105,7 +105,10 @@ def select_place(request):
     context = request['context']
     data = getDataPage(context['cat'])
     if data is not None:
-        i = randrange(0, len(data) - 1, 1)
+        try:
+            i = randrange(0, len(data) - 1, 1)
+        except:
+            i = 0
         dataPage = searchPage(data[i]['id'])
         msj = data[i]['name']
         if 'street' in dataPage['location']:
