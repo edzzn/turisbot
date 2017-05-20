@@ -43,22 +43,12 @@ def messenger_post():
         for entry in data['entry']:
             messages = entry['messaging']
 
-            # Validate if entry is text
-            # if messages[0]['message']['attachments']:
-            #     print('******* entrada de un archivo adjunto')
-            #     message = messages[0]
-            #     fb_message(message['sender']['id'],'Solo se permite el ingreso de texto'))
-
             if messages[0]:
-                # Get the first message
                 message = messages[0]
                 fb_id = message['sender']['id']
-                # try:
+
                 text = message['message']['text']
                 client.run_actions(session_id=fb_id, message=text)
-                # except:
-                #     print("no es un texto")
-                #     fb_message(fb_id, 'Por favor, solo texto ;)')
 
 
     else:
@@ -93,10 +83,7 @@ def send(request, response):
     # sender function
     fb_id = request['session_id']
     text = response['text']
-    print('Fb_di:')
-    print(fb_id)
-    print('text: ')
-    print(response)
+    print('Fb_di: %s, Text: %s' %(fb_id, response))
     fb_message(fb_id, text)
 
 
