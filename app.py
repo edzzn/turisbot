@@ -56,9 +56,10 @@ def messenger_post():
                 fb_id = message['sender']['id']
                 try:
                     text = message['message']['text']
+                    client.run_actions(session_id=fb_id, message=text)
                 except:
                     print("no es un texto")
-                client.run_actions(session_id=fb_id, message=text)
+                    fb_message(fb_id, 'Por favor, solo texto ;)')
 
 
     else:
