@@ -51,15 +51,14 @@ def messenger_post():
 
             if messages[0]:
                 # Get the first message
-                print('******* entrada de un mensaje')
                 message = messages[0]
                 fb_id = message['sender']['id']
-                try:
-                    text = message['message']['text']
-                    client.run_actions(session_id=fb_id, message=text)
-                except:
-                    print("no es un texto")
-                    fb_message(fb_id, 'Por favor, solo texto ;)')
+                # try:
+                text = message['message']['text']
+                client.run_actions(session_id=fb_id, message=text)
+                # except:
+                #     print("no es un texto")
+                #     fb_message(fb_id, 'Por favor, solo texto ;)')
 
 
     else:
