@@ -22,9 +22,9 @@ app = Bottle()
 def messenger_webhook():
     verify_token = request.query.get('hub.verify_token')
     if verify_token == FB_VERIFY_TOKEN:
-        challenge = response.status = 200
+        # challenge = response.status = 200
         challenge = request.query.get('hub.challenge')
-        return challenge
+        return challenge, 200
     else:
         return 'Invalid Request or Verification Token'
 
@@ -32,18 +32,25 @@ def messenger_webhook():
 # Facebook Messenger POST Webhook
 @app.post('/webhook')
 def messenger_post():
+    """ Maneja el webhook"""
     data = request.json
-    print('Data Received')
+    print('Data Received:')
     print(data)
     if data['object'] == 'page':
         for entry in data['entry']:
             messages = entry['messaging']
-            if messages[0]:
+
+            # Validate if entry is text
+            if messages[0]['text']:
                 # Get the first message
                 message = messages[0]
                 fb_id = message['sender']['id']
                 text = message['message']['text']
                 client.run_actions(session_id=fb_id, message=text)
+            else:
+                fb_message(message['sender']['id'],'Solo se soporta texto')
+                return 'Received Different Event'
+
     else:
         # Returned another event
         return 'Received Different Event'
