@@ -41,7 +41,7 @@ def messenger_post():
             messages = entry['messaging']
 
             # Validate if entry is text
-            if messages[0]['text']:
+            if messages[0]['message']['text']:
                 # Get the first message
                 message = messages[0]
                 fb_id = message['sender']['id']
