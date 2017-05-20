@@ -42,11 +42,13 @@ def messenger_post():
 
             # Validate if entry is text
             if messages[0]['message']['attachments']:
+                print('******* entrada de un archivo adjunto')
                 message = messages[0]
                 fb_message(message['sender']['id'],'Solo se permite el ingreso de texto'))
-                
+
             if messages[0]:
                 # Get the first message
+                print('******* entrada de un mensaje')
                 message = messages[0]
                 fb_id = message['sender']['id']
                 text = message['message']['text']
