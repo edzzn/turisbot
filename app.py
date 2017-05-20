@@ -54,7 +54,10 @@ def messenger_post():
                 print('******* entrada de un mensaje')
                 message = messages[0]
                 fb_id = message['sender']['id']
-                text = message['message']['text']
+                try:
+                    text = message['message']['text']
+                except:
+                    print("no es un texto")
                 client.run_actions(session_id=fb_id, message=text)
 
 
