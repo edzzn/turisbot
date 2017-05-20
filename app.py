@@ -36,15 +36,18 @@ def messenger_post():
     data = request.json
     print('Data Received:')
     print(data)
+
+    # asegura que es una subcripcion de una pagina
     if data['object'] == 'page':
+
         for entry in data['entry']:
             messages = entry['messaging']
 
             # Validate if entry is text
-            if messages[0]['message']['attachments']:
-                print('******* entrada de un archivo adjunto')
-                message = messages[0]
-                fb_message(message['sender']['id'],'Solo se permite el ingreso de texto'))
+            # if messages[0]['message']['attachments']:
+            #     print('******* entrada de un archivo adjunto')
+            #     message = messages[0]
+            #     fb_message(message['sender']['id'],'Solo se permite el ingreso de texto'))
 
             if messages[0]:
                 # Get the first message
