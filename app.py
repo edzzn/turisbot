@@ -41,15 +41,17 @@ def messenger_post():
             messages = entry['messaging']
 
             # Validate if entry is text
-            if messages[0]['message']['text']:
+            if messages[0]['message']['attachments']:
+                message = messages[0]
+                fb_message(message['sender']['id'],'Solo se permite el ingreso de texto'))
+                
+            if messages[0]:
                 # Get the first message
                 message = messages[0]
                 fb_id = message['sender']['id']
                 text = message['message']['text']
                 client.run_actions(session_id=fb_id, message=text)
-            else:
-                fb_message(message['sender']['id'],'Solo se soporta texto')
-                return 'Received Different Event'
+
 
     else:
         # Returned another event
