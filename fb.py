@@ -2,9 +2,11 @@ import requests
 import os
 from pprint import pprint as pp
 
-# token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
+try:
+    token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
+except:
+    token = ""
 
-token = ""
 
 def setToken():
     global token
