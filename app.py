@@ -75,7 +75,7 @@ def fb_generic_message(sender_id):
     print "Dentro de fb_generic_message"
     data = {
     "recipient":{
-        "id":"USER_ID"
+        "id" : sender_id
       },
       "message":{
         "attachment":{
