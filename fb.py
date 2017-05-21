@@ -49,11 +49,11 @@ def getDataPage(query):
     # print(requests)
     if 'data' in requests:
         # check if data is empty
-        if requst['data']:
+        if requests['data']:
             print('FB.py sent data - getDataPage()')
             pp(requests['data'])
             return(requests['data'])
-            
+
     elif 'error' in requests and len(requests['data']) > 0:
         print(requests['error']['message'])
         return None
