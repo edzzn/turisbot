@@ -4,10 +4,10 @@ from pprint import pprint as pp
 
 token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
 
-def setToken(){
+def setToken():
     global token
     token = raw_input('Token: >')
-}
+
 
 
 # set info
