@@ -100,8 +100,11 @@ def fb_generic_message(sender_id, text):
                                     "title":"Start Chatting",
                                     "payload":"DEVELOPER_DEFINED_PAYLOAD"
                                 }
-
+                            ]
                         }
+                    ]
+                }
+            }
         }
     }
     # prepare query
