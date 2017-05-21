@@ -90,7 +90,7 @@ def fb_generic_message(sender_id):
                 "default_action": {
                   "type": "web_url",
                   "url": "https://peterssendreceiveapp.ngrok.io/view?item=103",
-                  "messenger_extensions": true,
+                  
                   "webview_height_ratio": "tall",
                   "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
                 },
