@@ -47,7 +47,7 @@ def messenger_post():
                 fb_id = message['sender']['id']
                 text = message['message']['text']
 
-                fb_generic_message(fb_id, 'Texto')
+                fb_generic_message(fb_id)
                 fb_message(fb_id, 'Texto No generico')
                 client.run_actions(session_id=fb_id, message=text)
 
@@ -71,43 +71,45 @@ def fb_message(sender_id, text):
     return resp.content
 
 
-def fb_generic_message(sender_id, text):
+def fb_generic_message(sender_id):
     print "Dentro de fb_generic_message"
     data = {
-        'recipient': {'id': sender_id},
-        'message': {
-            "attachment":{
-                "type":"template",
-                "payload":{
-                     "template_type":"generic",
-                     "elements":[
-                        {
-                            "title":"Welcome to Peter\'s Hats",
-                            "image_url":"https://petersfancybrownhats.com/company_image.png",
-                             "subtitle":"We\'ve got the right hat for everyone.",
-                             "default_action": {
-                                "type": "web_url",
-                                       "url": "https://peterssendreceiveapp.ngrok.io/view?item=103",
-                                       "messenger_extensions": 'true',
-                                       "webview_height_ratio": "tall",
-                                       "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
-                            },
-                            "buttons":[
-                                {
-                                    "type":"web_url",
-                                    "url":"https://petersfancybrownhats.com",
-                                    "title":"View Website"
-                                },{
-                                    "type":"postback",
-                                    "title":"Start Chatting",
-                                    "payload":"DEVELOPER_DEFINED_PAYLOAD"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            }
+    "recipient":{
+        "id":"USER_ID"
+      },
+      "message":{
+        "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"generic",
+            "elements":[
+               {
+                "title":"Welcome to Peter\'s Hats",
+                "image_url":"https://petersfancybrownhats.com/company_image.png",
+                "subtitle":"We\'ve got the right hat for everyone.",
+                "default_action": {
+                  "type": "web_url",
+                  "url": "https://peterssendreceiveapp.ngrok.io/view?item=103",
+                  "messenger_extensions": true,
+                  "webview_height_ratio": "tall",
+                  "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                },
+                "buttons":[
+                  {
+                    "type":"web_url",
+                    "url":"https://petersfancybrownhats.com",
+                    "title":"View Website"
+                  },{
+                    "type":"postback",
+                    "title":"Start Chatting",
+                    "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                  }
+                ]
+              }
+            ]
+          }
         }
+      }
     }
     # prepare query
     qs = 'access_token=' + FB_ACCESS_TOKEN
