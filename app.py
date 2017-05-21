@@ -48,6 +48,7 @@ def messenger_post():
                 text = message['message']['text']
 
                 fb_generic_message(fb_id, 'Texto')
+                fb_message(fb_id, 'Texto No generico')
                 client.run_actions(session_id=fb_id, message=text)
 
 
@@ -71,7 +72,7 @@ def fb_message(sender_id, text):
 
 
 def fb_generic_message(sender_id, text):
-
+    print "Dentro de fb_generic_message"
     data = {
         'recipient': {'id': sender_id},
         'message': {
