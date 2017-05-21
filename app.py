@@ -90,7 +90,7 @@ def fb_generic_message(sender_id):
                 "default_action": {
                   "type": "web_url",
                   "url": "https://peterssendreceiveapp.ngrok.io/view?item=103",
-                  
+
                   "webview_height_ratio": "tall",
                   "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
                 },
@@ -114,7 +114,7 @@ def fb_generic_message(sender_id):
     # prepare query
     qs = 'access_token=' + FB_ACCESS_TOKEN
     # send post request to messenger
-    resp = requests.post('https://graph.facebook.com/me/messages?' + qs,
+    resp = requests.post('https://graph.facebook.com/v2.6/me/messages?' + qs,
                          json=data)
     return resp.content
 
