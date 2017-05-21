@@ -8,9 +8,11 @@ from sys import argv
 
 # Declare some constants
 FB_VERIFY_TOKEN = os.environ['FB_VERIFY_TOKEN']
-# FB_PAGE_ID = os.environ['FB_PAGE_ID']
+FB_PAGE_ID = os.environ['FB_PAGE_ID']
 FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
 WIT_TOKEN = os.environ['WIT_TOKEN']
+
+
 
 # Setup Bottle Server
 debug(True)
@@ -69,46 +71,75 @@ def fb_message(sender_id, text):
     resp = requests.post('https://graph.facebook.com/me/messages?' + qs,
                          json=data)
     return resp.content
+def fb_boton_message(sender_id, text_boton):
+    data = {
+    "recipient":{"id" : sender_id},
+     "message":{
+        "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"button",
+            "text":text_boton,
+            "buttons":[
+              {
+                "type":"web_url",
+                "url":"https://edzzn.com",
+                "title":"Show Website"
+              },
+              {
+                "type":"postback",
+                "title":"Start Chatting",
+                "payload":"USER_DEFINED_PAYLOAD"
+              }
+              ]
+          }
+        }
+      }
+    }
+    # prepare query
+    qs = 'access_token=' + FB_ACCESS_TOKEN
+    # send post request to messenger
+    resp = requests.post('https://graph.facebook.com/me/messages?' + qs,
+                         json=data)
+    return resp.content
 
 
 def fb_generic_message(sender_id):
     print "Dentro de fb_generic_message"
     data = {
-    "recipient":{
-        "id" : sender_id
-      },
-      "message":{
-        "attachment":{
-          "type":"template",
-          "payload":{
-            "template_type":"generic",
-            "elements":[
-               {
-                "title":"Welcome to Peter\'s Hats",
-                "image_url":"https://petersfancybrownhats.com/company_image.png",
-                "subtitle":"We\'ve got the right hat for everyone.",
-                "default_action": {
-                  "type": "web_url",
-                  "url": "https://peterssendreceiveapp.ngrok.io/view?item=103",
+    "recipient":{"id" : sender_id},
+     "message":{
+         "attachment":{
+           "type":"template",
+           "payload":{
+             "template_type":"generic",
+             "elements":[
+                {
+                 "title":"Welcome to Peter\'s Hats",
+                 "image_url":"https://edzzn.com/",
+                 "subtitle":"We\'ve got the right hat for everyone.",
+                 "default_action": {
+                   "type": "web_url",
+                   "url": "https://edzzn.com/",
 
-                  "webview_height_ratio": "tall",
-                  "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
-                },
-                "buttons":[
-                  {
-                    "type":"web_url",
-                    "url":"https://petersfancybrownhats.com",
-                    "title":"View Website"
-                  },{
-                    "type":"postback",
-                    "title":"Start Chatting",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD"
-                  }
-                ]
-              }
-            ]
-          }
-        }
+                   "webview_height_ratio": "tall",
+                   "fallback_url": "https://edzzn.com/"
+                 },
+                 "buttons":[
+                   {
+                     "type":"web_url",
+                     "url":"https://petersfancybrownhats.com",
+                     "title":"View Website"
+                   },{
+                     "type":"postback",
+                     "title":"Start Chatting",
+                     "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                   }
+                 ]
+               }
+             ]
+           }
+         }
       }
     }
     # prepare query
