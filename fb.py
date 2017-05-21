@@ -1,5 +1,6 @@
 import requests
 import os
+from pprint import pprint as pp
 
 token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
 
@@ -31,7 +32,9 @@ def getFirstPage(query):
     if 'data' not in requests:
         print('No data')
         return None
-    print(requests['data'][0]['name'])
+    print("Facebook Data: \n Query: %s" %query)
+    pp(requests['data'][0]['name'])
+
     return(requests['data'][0]['name'])
 
 
@@ -56,6 +59,8 @@ def searchPage(pageId):
     print(requests)
     if 'name' in requests:
         print('FB.py sent data')
+        print("Facebook Data: \n PageId: %s" % pageId)
+        pp(requests)
         return(requests)
     elif 'error' in requests:
         print(requests['error']['message'])

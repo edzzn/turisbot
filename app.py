@@ -110,7 +110,7 @@ def select_place(request):
     data = getDataPage(context['cat'])
     if data is not None:
         try:
-            i = randrange(0, len(data) - 1, 1)
+            i = randrange(0, len(data))
         except:
             i = 0
         dataPage = searchPage(data[i]['id'])
