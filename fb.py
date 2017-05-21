@@ -2,7 +2,9 @@ import requests
 import os
 from pprint import pprint as pp
 
-token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
+# token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
+
+token = ""
 
 def setToken():
     global token
@@ -39,8 +41,7 @@ def getFirstPage(query):
         print('No data')
         return None
     print("Facebook Data: \n Query: %s" %query)
-    pp(requests['data'][0]['name'])
-
+    # pp(requests['data'][0]['name'])
     return(requests['data'][0]['name'])
 
 
@@ -50,8 +51,8 @@ def getDataPage(query):
     if 'data' in requests:
         # check if data is empty
         if requests['data']:
-            print('FB.py sent data - getDataPage()')
-            pp(requests['data'])
+            # print('FB.py sent data - getDataPage()')
+            # pp(requests['data'])
             return(requests['data'])
 
     elif 'error' in requests and len(requests['data']) > 0:
@@ -86,9 +87,7 @@ def listIdPages(data):
         print(place['id'])
 
 # writes in a .txt file the id of the pages
-
-
-def writeIdPages(data, fileId):
-    for place in data['data']:
-        fileId.write(place['id'] + ": " + place['name'] + '\n')
-        print(place['id'] + ": " + place['name'])
+# def writeIdPages(data, fileId):
+#     for place in data['data']:
+#         fileId.write(place['id'] + ": " + place['name'] + '\n')
+#         print(place['id'] + ": " + place['name'])
