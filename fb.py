@@ -2,7 +2,9 @@ import requests
 import os
 from pprint import pprint as pp
 
-token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
+# token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
+token = "EAAECnMYc2p0BAPqrLypUJNWehXH4F23AfsZB9gBaZBPkEwBH6lAe2BaRbrwmw0ZBxWZBR21c5qA4bbdZC7fXlywr9TgMmKYovJmRbPZBsRmvPhbF7pc9iozIZB5N8f8Ww3obJHgBgXQUbBYqZBnNCuGZAxzbDBuhcEoSxGzOaHup0hAZDZD"
+
 
 # set info
 
@@ -42,8 +44,14 @@ def getDataPage(query):
     requests = getDataUrl(setSearchIdsUrl(query))
     # print(requests)
     if 'data' in requests:
-        print('FB.py sent data - getDataPage()')
-        return(requests['data'])
+        # check if data is empty
+        if requst['data']:
+            print('FB.py sent data - getDataPage()')
+            pp(requests['data'])
+            return(requests['data'])
+        else:
+            print 'Data is empty'
+            return None
     elif 'error' in requests and len(requests['data']) > 0:
         print(requests['error']['message'])
         return None
@@ -83,11 +91,6 @@ def writeIdPages(data, fileId):
         fileId.write(place['id'] + ": " + place['name'] + '\n')
         print(place['id'] + ": " + place['name'])
 
-# listIdPages(getDataUrl(setSearchIdsUrl('pizza')))
 
-# writeIdPages(getDataUrl(setSearchIdsUrl('pizza')))
-
-
-# getFirstPage("italian")
-# a = searchPage('PizzeriaLittleItalyCuenca')
-# print(a['location']['street'])
+if '__name__' == '__main__':
+    token = "EAAECnMYc2p0BAPqrLypUJNWehXH4F23AfsZB9gBaZBPkEwBH6lAe2BaRbrwmw0ZBxWZBR21c5qA4bbdZC7fXlywr9TgMmKYovJmRbPZBsRmvPhbF7pc9iozIZB5N8f8Ww3obJHgBgXQUbBYqZBnNCuGZAxzbDBuhcEoSxGzOaHup0hAZDZD"

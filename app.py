@@ -42,12 +42,13 @@ def messenger_post():
 
         for entry in data['entry']:
             messages = entry['messaging']
+            try:
+                if messages[0]:
+                    message = messages[0]
+                    fb_id = message['sender']['id']
+                    text = message['message']['text']
+                    client.run_actions(session_id=fb_id, message=text)
 
-            if messages[0]:
-                message = messages[0]
-                fb_id = message['sender']['id']
-                text = message['message']['text']
-                client.run_actions(session_id=fb_id, message=text)
 
 
     else:
