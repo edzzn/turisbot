@@ -2,8 +2,12 @@ import requests
 import os
 from pprint import pprint as pp
 
-# token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
-token = "EAAECnMYc2p0BAPqrLypUJNWehXH4F23AfsZB9gBaZBPkEwBH6lAe2BaRbrwmw0ZBxWZBR21c5qA4bbdZC7fXlywr9TgMmKYovJmRbPZBsRmvPhbF7pc9iozIZB5N8f8Ww3obJHgBgXQUbBYqZBnNCuGZAxzbDBuhcEoSxGzOaHup0hAZDZD"
+token = FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
+
+def setToken(){
+    global token
+    token = raw_input('Token: >')
+}
 
 
 # set info
@@ -90,7 +94,3 @@ def writeIdPages(data, fileId):
     for place in data['data']:
         fileId.write(place['id'] + ": " + place['name'] + '\n')
         print(place['id'] + ": " + place['name'])
-
-
-if '__name__' == '__main__':
-    token = "EAAECnMYc2p0BAPqrLypUJNWehXH4F23AfsZB9gBaZBPkEwBH6lAe2BaRbrwmw0ZBxWZBR21c5qA4bbdZC7fXlywr9TgMmKYovJmRbPZBsRmvPhbF7pc9iozIZB5N8f8Ww3obJHgBgXQUbBYqZBnNCuGZAxzbDBuhcEoSxGzOaHup0hAZDZD"
