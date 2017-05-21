@@ -53,9 +53,7 @@ def getDataPage(query):
             print('FB.py sent data - getDataPage()')
             pp(requests['data'])
             return(requests['data'])
-        else:
-            print 'Data is empty'
-            return None
+            
     elif 'error' in requests and len(requests['data']) > 0:
         print(requests['error']['message'])
         return None
