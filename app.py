@@ -51,6 +51,7 @@ def messenger_post():
 
                 fb_generic_message(fb_id)
                 fb_message(fb_id, 'Texto No generico')
+                fb_boton_message(fb_id,"Texto sobre el boton")
                 client.run_actions(session_id=fb_id, message=text)
 
 
@@ -123,7 +124,7 @@ def fb_generic_message(sender_id):
                    "url": "https://edzzn.com/",
 
                    "webview_height_ratio": "tall",
-                   "fallback_url": "https://edzzn.com/"
+                #    "fallback_url": "https://edzzn.com/"
                  },
                  "buttons":[
                    {
