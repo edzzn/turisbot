@@ -125,8 +125,7 @@ def select_place(request):
 actions = {
     'send': send,
     'merge': merge,
-    -    'select-place': place,
-    +    'select-place': select_place,
+    'select-place': select_place,
 }
 
 # Setup Wit Client
