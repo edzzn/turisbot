@@ -170,7 +170,7 @@ def fb_generic_message(sender_id, pages_id, maxi):
         try:
             about =  page_info['about']
         except:
-            about = "Tiene un promedio de: " + str(age_info['overall_star_rating'] + " estrellas")
+            about = "Tiene un promedio de: " + str(page_info['overall_star_rating'] + " estrellas")
 
         elem_i = {
                     "title":page_info['name'],
