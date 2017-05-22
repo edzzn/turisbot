@@ -108,8 +108,8 @@ def fb_boton_message(sender_id, text_boton):
 def fb_generic_message(sender_id, pages_id, maxi = 5):
 
     elements = []
-    if len(data) < maxi:
-        maxi = len(data) - 1
+    if len(pages_id) < maxi:
+        maxi = len(pages_id) - 1
 
     element = {
                 "title":"Welcome to Peter\'s Hats",
@@ -137,7 +137,7 @@ def fb_generic_message(sender_id, pages_id, maxi = 5):
 
 
     for i in range(maxi):
-        page_info = searchPage(data[i])
+        page_info = searchPage(pages_id[i])
         elem_i = {
                     "title":page_info['name'],
                     "image_url": page_info['picture']['data']['url'],
