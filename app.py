@@ -38,11 +38,14 @@ def messenger_post():
     if data['object'] == 'page':
         for entry in data['entry']:
             messages = entry['messaging']
-            if messages[0] and messages[0]['message']['text'] != 'Gracias':
+            if messages[0]:
                 # Get the first message
                 message = messages[0]
                 fb_id = message['sender']['id']
                 text = message['message']['text']
+                if text == "Hola" or text == "hola":
+                    fb_message(fb_id, 'Hola, Puedes preguntar por cualquier lugar de tu interes. :)')
+
                 client.run_actions(session_id=fb_id, message=text)
     else:
         # Returned another event
