@@ -246,7 +246,8 @@ def select_place(request):
         # context['place'] = msj
         return context
     else:
-        fb_message(No se encontro el lugar, intenta con otro)
+        fb_id = request['session_id']
+        fb_message(fb_id, "No se encontro el lugar, intenta con otro")
         # context['place'] = 'No se encontro el lugar, intenta con otro'
         return context
 
