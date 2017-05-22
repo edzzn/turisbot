@@ -105,7 +105,7 @@ def fb_boton_message(sender_id, text_boton):
     return resp.content
 
 
-def fb_generic_message(sender_id, pages_id, maxi = 5):
+def fb_generic_message(sender_id, pages_id, maxi):
 
     elements = []
     if len(pages_id) < maxi:
@@ -137,7 +137,7 @@ def fb_generic_message(sender_id, pages_id, maxi = 5):
 
 
     for i in range(maxi):
-        page_info = searchPage(pages_id[i])
+        page_info = searchPage(pages_id[i]['id'])
         elem_i = {
                     "title":page_info['name'],
                     "image_url": page_info['picture']['data']['url'],

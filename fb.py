@@ -66,8 +66,7 @@ def getDataPage(query):
 
 
 def searchPage(pageId):
-    url = ("https://graph.facebook.com/v2.8/" + pageId + "?fields=name%2Cabout" +
-    "%2Coverall_star_rating%2Clocation%2Cpicture&access_token=" + token)
+    url = ("https://graph.facebook.com/v2.8/" + pageId + "?fields=name%2Cabout%2Coverall_star_rating%2Clocation%2Cpicture&access_token=" + token)
     requests = getDataUrl(url)
     print(requests)
     if 'name' in requests:
