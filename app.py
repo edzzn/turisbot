@@ -2,7 +2,7 @@ import os
 from wit import Wit
 import requests
 from bottle import Bottle, request, debug, response
-from fb import getDataPage, searchPage
+from fb import getDataPage, searchPage, fb_generic_message, fb_message
 from random import randrange
 from sys import argv
 
@@ -22,7 +22,7 @@ app = Bottle()
 def messenger_webhook():
     verify_token = request.query.get('hub.verify_token')
     if verify_token == FB_VERIFY_TOKEN:
-        challenge = response.status = 200
+        response.status = 200
         challenge = request.query.get('hub.challenge')
         return challenge
     else:
@@ -43,24 +43,14 @@ def messenger_post():
                 message = messages[0]
                 fb_id = message['sender']['id']
                 text = message['message']['text']
-                client.run_actions(session_id=fb_id, message=text)
+                if text == "Hola" or text == "hola":
+                    fb_message(fb_id, 'Hola, Puedes preguntar por cualquier lugar de tu interes. :)')
+                else:
+                    client.run_actions(session_id=fb_id, message=text)
     else:
         # Returned another event
         return 'Received Different Event'
     return None
-
-
-def fb_message(sender_id, text):
-    data = {
-        'recipient': {'id': sender_id},
-        'message': {'text': text}
-    }
-    # prepare query
-    qs = 'access_token=' + FB_ACCESS_TOKEN
-    # send post request to messenger
-    resp = requests.post('https://graph.facebook.com/me/messages?' + qs,
-                         json=data)
-    return resp.content
 
 
 def first_entity_value(entities, entity):
@@ -101,22 +91,17 @@ def merge(request):
     return context
 
 
+
 def select_place(request):
     context = request['context']
     data = getDataPage(context['cat'])
     if data is not None:
-        i = randrange(0, len(data) - 1, 1)
-        dataPage = searchPage(data[i]['id'])
-        msj = data[i]['name']
-        if 'street' in dataPage['location']:
-            msj = msj + ", esta en las calles: " + str(dataPage['location']['street'])
-        if 'overall_star_rating' in dataPage:
-            msj = msj + " y tiene un promedio de " + \
-                str(dataPage['overall_star_rating']) + ' estrellas'
-        context['place'] = msj
+        fb_id = request['session_id']
+        fb_generic_message(sender_id=fb_id,pages_id=data,maxi=4)
+        context['place'] = ''
         return context
     else:
-        context['place'] = 'No place found'
+        context['place'] = 'No se encontraron lugares :/'
         return context
 
 
