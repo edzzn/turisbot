@@ -169,8 +169,9 @@ def fb_generic_message(sender_id, pages_id, maxi):
         page_info = searchPage(pages_id[i]['id'])
         try:
             about =  page_info['about']
-        else:
-            about = "Tiene un promedio de: " + page_info['overall_star_rating'] + " estrellas" 
+        except:
+            about = "Tiene un promedio de: " + page_info['overall_star_rating'] + " estrellas"
+
         elem_i = {
                     "title":page_info['name'],
                     "image_url": page_info['picture']['data']['url'],
