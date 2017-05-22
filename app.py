@@ -106,17 +106,19 @@ def select_place(request):
     context = request['context']
     data = getDataPage(context['cat'])
     if data is not None:
-        i = randrange(0, len(data) - 1, 1)
-        dataPage = searchPage(data[i]['id'])
-        msj = data[i]['name']
+        fb_id = request['session_id']
+        fb_generic_message(sender_id=fb_id,pages_id=data,maxi=4)
+        # i = randrange(0, len(data) - 1, 1)
+        # dataPage = searchPage(data[i]['id'])
+        # msj = data[i]['name']
         # if 'street' in dataPage['location']:
         #     msj = msj + ", esta en las calles: " + str(dataPage['location']['street'])
         # if 'overall_star_rating' in dataPage:
         #     msj = msj + " y tiene un promedio de " + str(dataPage['overall_star_rating']) + ' estrellas'
-        context['place'] = msj
+        context['place'] = ''
         return context
     else:
-        context['place'] = 'No place found'
+        context['place'] = 'No se encontraron lugares :/'
         return context
 
 
