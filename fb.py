@@ -140,37 +140,41 @@ def fb_generic_message(sender_id, pages_id, maxi):
     if len(pages_id) < maxi:
         maxi = len(pages_id) - 1
 
-    element = {
-                "title":"Welcome to Peter\'s Hats",
-                "image_url":"https://edzzn.com/",
-                "subtitle":"We\'ve got the right hat for everyone.",
-                "default_action": {
-                  "type": "web_url",
-                  "url": "https://edzzn.com/",
-
-                  "webview_height_ratio": "tall",
-               #    "fallback_url": "https://edzzn.com/"
-                },
-                "buttons":[
-                  {
-                    "type":"web_url",
-                    "url":"https://petersfancybrownhats.com",
-                    "title":"View Website"
-                  },{
-                    "type":"postback",
-                    "title":"Start Chatting",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD"
-                  }
-                ]
-              }
+    # element = {
+    #             "title":"Welcome to Peter\'s Hats",
+    #             "image_url":"https://edzzn.com/",
+    #             "subtitle":"We\'ve got the right hat for everyone.",
+    #             "default_action": {
+    #               "type": "web_url",
+    #               "url": "https://edzzn.com/",
+    #
+    #               "webview_height_ratio": "tall",
+    #            #    "fallback_url": "https://edzzn.com/"
+    #             },
+    #             "buttons":[
+    #               {
+    #                 "type":"web_url",
+    #                 "url":"https://petersfancybrownhats.com",
+    #                 "title":"View Website"
+    #               },{
+    #                 "type":"postback",
+    #                 "title":"Start Chatting",
+    #                 "payload":"DEVELOPER_DEFINED_PAYLOAD"
+    #               }
+    #             ]
+    #           }
 
 
     for i in range(maxi):
         page_info = searchPage(pages_id[i]['id'])
+        try:
+            about =  page_info['about']
+        else:
+            about = "Tiene un promedio de: " + page_info['overall_star_rating'] + " estrellas" 
         elem_i = {
                     "title":page_info['name'],
                     "image_url": page_info['picture']['data']['url'],
-                    "subtitle":page_info['about'],
+                    "subtitle":about,
                     "default_action": {
                       "type": "web_url",
                       "url": "https://www.facebook.com/" + page_info['id'],
