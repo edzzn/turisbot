@@ -2,7 +2,7 @@ import os
 from wit import Wit
 import requests
 from bottle import Bottle, request, debug, response
-from fb import getDataPage, searchPage, fb_generic_message
+from fb import getDataPage, searchPage, fb_generic_message, fb_message
 from random import randrange
 from sys import argv
 
@@ -50,19 +50,6 @@ def messenger_post():
     return None
 
 
-def fb_message(sender_id, text):
-    data = {
-        'recipient': {'id': sender_id},
-        'message': {'text': text}
-    }
-    # prepare query
-    qs = 'access_token=' + FB_ACCESS_TOKEN
-    # send post request to messenger
-    resp = requests.post('https://graph.facebook.com/me/messages?' + qs,
-                         json=data)
-    return resp.content
-
-
 def first_entity_value(entities, entity):
     if entity not in entities:
         return None
@@ -108,13 +95,6 @@ def select_place(request):
     if data is not None:
         fb_id = request['session_id']
         fb_generic_message(sender_id=fb_id,pages_id=data,maxi=4)
-        # i = randrange(0, len(data) - 1, 1)
-        # dataPage = searchPage(data[i]['id'])
-        # msj = data[i]['name']
-        # if 'street' in dataPage['location']:
-        #     msj = msj + ", esta en las calles: " + str(dataPage['location']['street'])
-        # if 'overall_star_rating' in dataPage:
-        #     msj = msj + " y tiene un promedio de " + str(dataPage['overall_star_rating']) + ' estrellas'
         context['place'] = ''
         return context
     else:

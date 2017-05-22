@@ -1,6 +1,7 @@
 import requests
 import os
 from pprint import pprint as pp
+import time
 
 try:
     FB_ACCESS_TOKEN = os.environ['FB_ACCESS_TOKEN']
@@ -13,11 +14,8 @@ def setToken():
     FB_ACCESS_TOKEN = raw_input('Token: >')
 
 
-
-# set info
-
-
 def setSearchIdsUrl(topic):
+    # set info
     latitude = "-2.9183953"
     longitude = "-79.0362543"
     radio = "5000"  # en metros
@@ -66,7 +64,7 @@ def getDataPage(query):
 
 
 def searchPage(pageId):
-    url = ("https://graph.facebook.com/v2.8/" + pageId + "?fields=name%2Cabout%2Coverall_star_rating%2Clocation%2Cpicture&access_token=" + FB_ACCESS_TOKEN)
+    url = ("https://graph.facebook.com/v2.8/" + pageId + "?fields=name%2Cabout%2Coverall_star_rating%2Clocation%2Chours%2Cpicture&access_token=" + FB_ACCESS_TOKEN)
     requests = getDataUrl(url)
     print(requests)
     if 'name' in requests:
@@ -133,6 +131,27 @@ def fb_boton_message(sender_id, text_boton):
                          json=data)
     return resp.content
 
+def is_Open(hours):
+    day_actual = time.strftime("%a", time.localtime())
+    hora_actual = time.strftime("%H:%M", time.localtime())
+    horas = []
+    is_open = True
+    for hour in hours:
+        if day_actual.upper() in hour.upper():
+            horas.append(hour)
+
+    for hora in horas:
+        if "open" in hora and hora_actual < hours[hora]:
+            is_open = False
+            print hora, hora_actual
+        if "close" in hora and hora_actual > hours[hora]:
+            is_open = False
+            print hora, hora_actual
+
+
+    return is_open
+
+
 
 def fb_generic_message(sender_id, pages_id, maxi):
 
@@ -140,33 +159,10 @@ def fb_generic_message(sender_id, pages_id, maxi):
     if len(pages_id) < maxi:
         maxi = len(pages_id) - 1
 
-    # element = {
-    #             "title":"Welcome to Peter\'s Hats",
-    #             "image_url":"https://edzzn.com/",
-    #             "subtitle":"We\'ve got the right hat for everyone.",
-    #             "default_action": {
-    #               "type": "web_url",
-    #               "url": "https://edzzn.com/",
-    #
-    #               "webview_height_ratio": "tall",
-    #            #    "fallback_url": "https://edzzn.com/"
-    #             },
-    #             "buttons":[
-    #               {
-    #                 "type":"web_url",
-    #                 "url":"https://petersfancybrownhats.com",
-    #                 "title":"View Website"
-    #               },{
-    #                 "type":"postback",
-    #                 "title":"Start Chatting",
-    #                 "payload":"DEVELOPER_DEFINED_PAYLOAD"
-    #               }
-    #             ]
-    #           }
-
 
     for i in range(maxi):
         page_info = searchPage(pages_id[i]['id'])
+
         try:
             about =  page_info['about']
         except:
@@ -189,11 +185,6 @@ def fb_generic_message(sender_id, pages_id, maxi):
                         "url":"https://www.messenger.com/t/" +page_info['id'],
                         "title":"Enviar un mensaje"
                       }
-                    #   ,{
-                    #     "type":"postback",
-                    #     "title":"Start Chatting",
-                    #     "payload":"DEVELOPER_DEFINED_PAYLOAD"
-                    #   }
                     ]
                   }
         elements.append(elem_i)
