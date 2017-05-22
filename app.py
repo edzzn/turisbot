@@ -2,7 +2,7 @@ import os
 from wit import Wit
 import requests
 from bottle import Bottle, request, debug, response
-from fb import getDataPage, searchPage
+from fb import getDataPage, searchPage, fb_generic_message
 from random import randrange
 from sys import argv
 
@@ -109,10 +109,10 @@ def select_place(request):
         i = randrange(0, len(data) - 1, 1)
         dataPage = searchPage(data[i]['id'])
         msj = data[i]['name']
-        if 'street' in dataPage['location']:
-            msj = msj + ", esta en las calles: " + str(dataPage['location']['street'])
-        if 'overall_star_rating' in dataPage:
-            msj = msj + " y tiene un promedio de " + str(dataPage['overall_star_rating']) + ' estrellas'
+        # if 'street' in dataPage['location']:
+        #     msj = msj + ", esta en las calles: " + str(dataPage['location']['street'])
+        # if 'overall_star_rating' in dataPage:
+        #     msj = msj + " y tiene un promedio de " + str(dataPage['overall_star_rating']) + ' estrellas'
         context['place'] = msj
         return context
     else:
