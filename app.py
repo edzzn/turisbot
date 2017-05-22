@@ -45,8 +45,8 @@ def messenger_post():
                 text = message['message']['text']
                 if text == "Hola" or text == "hola":
                     fb_message(fb_id, 'Hola, Puedes preguntar por cualquier lugar de tu interes. :)')
-
-                client.run_actions(session_id=fb_id, message=text)
+                else:
+                    client.run_actions(session_id=fb_id, message=text)
     else:
         # Returned another event
         return 'Received Different Event'
