@@ -39,6 +39,10 @@ def messenger_post():
         for entry in data['entry']:
             messages = entry['messaging']
             if messages[0]:
+
+                if messages[0]['message']['text'] == 'Gracias':
+                    print("pass Gracias")
+                    pass
                 # Get the first message
                 message = messages[0]
                 fb_id = message['sender']['id']
