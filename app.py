@@ -49,9 +49,9 @@ def messenger_post():
                 fb_id = message['sender']['id']
                 text = message['message']['text']
 
-                fb_generic_message(fb_id)
-                fb_message(fb_id, 'Texto No generico')
-                fb_boton_message(fb_id,"Texto sobre el boton")
+                # fb_generic_message(fb_id)
+                # fb_message(fb_id, 'Texto No generico')
+                # fb_boton_message(fb_id,"Texto sobre el boton")
                 client.run_actions(session_id=fb_id, message=text)
 
 
@@ -105,8 +105,67 @@ def fb_boton_message(sender_id, text_boton):
     return resp.content
 
 
-def fb_generic_message(sender_id):
-    print "Dentro de fb_generic_message"
+def fb_generic_message(sender_id, pages_id, maxi = 5):
+
+    elements = []
+    if len(data) < maxi:
+        maxi = len(data) - 1
+
+    element = {
+                "title":"Welcome to Peter\'s Hats",
+                "image_url":"https://edzzn.com/",
+                "subtitle":"We\'ve got the right hat for everyone.",
+                "default_action": {
+                  "type": "web_url",
+                  "url": "https://edzzn.com/",
+
+                  "webview_height_ratio": "tall",
+               #    "fallback_url": "https://edzzn.com/"
+                },
+                "buttons":[
+                  {
+                    "type":"web_url",
+                    "url":"https://petersfancybrownhats.com",
+                    "title":"View Website"
+                  },{
+                    "type":"postback",
+                    "title":"Start Chatting",
+                    "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                  }
+                ]
+              }
+
+
+    for i in range(maxi):
+        page_info = searchPage(data[i])
+        elem_i = {
+                    "title":page_info['name'],
+                    "image_url": page_info['picture']['data']['url'],
+                    "subtitle":page_info['about'],
+                    "default_action": {
+                      "type": "web_url",
+                      "url": "https://www.facebook.com/" + page_info['id'],
+
+                    #   "webview_height_ratio": "tall",
+                   #    "fallback_url": "https://edzzn.com/"
+                    },
+                    "buttons":[
+                      {
+                        "type":"web_url",
+                        "url":"https://www.messenger.com/t/" +page_info['id'],
+                        "title":"Enviar un mensaje"
+                      }
+                    #   ,{
+                    #     "type":"postback",
+                    #     "title":"Start Chatting",
+                    #     "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                    #   }
+                    ]
+                  }
+        elements.append(elem_i)
+
+
+
     data = {
     "recipient":{"id" : sender_id},
      "message":{
@@ -114,35 +173,13 @@ def fb_generic_message(sender_id):
            "type":"template",
            "payload":{
              "template_type":"generic",
-             "elements":[
-                {
-                 "title":"Welcome to Peter\'s Hats",
-                 "image_url":"https://edzzn.com/",
-                 "subtitle":"We\'ve got the right hat for everyone.",
-                 "default_action": {
-                   "type": "web_url",
-                   "url": "https://edzzn.com/",
-
-                   "webview_height_ratio": "tall",
-                #    "fallback_url": "https://edzzn.com/"
-                 },
-                 "buttons":[
-                   {
-                     "type":"web_url",
-                     "url":"https://petersfancybrownhats.com",
-                     "title":"View Website"
-                   },{
-                     "type":"postback",
-                     "title":"Start Chatting",
-                     "payload":"DEVELOPER_DEFINED_PAYLOAD"
-                   }
-                 ]
-               }
-             ]
+             "elements": elements
            }
          }
       }
     }
+
+
     # prepare query
     qs = 'access_token=' + FB_ACCESS_TOKEN
     # send post request to messenger
@@ -190,21 +227,27 @@ def select_place(request):
     context = request['context']
     data = getDataPage(context['cat'])
     if data is not None:
-        try:
-            i = randrange(0, len(data))
-        except:
-            i = 0
-        dataPage = searchPage(data[i]['id'])
-        msj = data[i]['name']
-        if 'street' in dataPage['location']:
-            msj = msj + ", esta en las calles: " + str(dataPage['location']['street'])
-        if 'overall_star_rating' in dataPage:
-            msj = msj + " y tiene un promedio de " + \
-                str(dataPage['overall_star_rating']) + ' estrellas'
-        context['place'] = msj
+
+        fb_id = request['session_id']
+        fb_generic_message(fb_id, data, 5)
+
+
+        # try:
+        #     i = randrange(0, len(data))
+        # except:
+        #     i = 0
+        # dataPage = searchPage(data[i]['id'])
+        # msj = data[i]['name']
+        # if 'street' in dataPage['location']:
+        #     msj = msj + ", esta en las calles: " + str(dataPage['location']['street'])
+        # if 'overall_star_rating' in dataPage:
+        #     msj = msj + " y tiene un promedio de " + \
+        #         str(dataPage['overall_star_rating']) + ' estrellas'
+        # context['place'] = msj
         return context
     else:
-        context['place'] = 'No place found'
+        fb_message(No se encontro el lugar, intenta con otro)
+        # context['place'] = 'No se encontro el lugar, intenta con otro'
         return context
 
 
