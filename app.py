@@ -52,7 +52,7 @@ def messenger_post():
                 # fb_generic_message(fb_id)
                 # fb_message(fb_id, 'Texto No generico')
                 # fb_boton_message(fb_id,"Texto sobre el boton")
-                client.run_actions(session_id=fb_id, message=text)
+                client.run_actions(session_id=fb_id, message=text, max_steps=10)
 
 
     else:
@@ -229,7 +229,7 @@ def select_place(request):
     if data is not None:
 
         fb_id = request['session_id']
-        fb_generic_message(fb_id, data, 5)
+        fb_generic_message(fb_id, data, 3)
 
 
         # try:
